@@ -36,5 +36,6 @@ public class PostController {
         return postRepository.findByUserId(userId); //add exception
     }
 
+    //TODO: Add editPost API
 
 }

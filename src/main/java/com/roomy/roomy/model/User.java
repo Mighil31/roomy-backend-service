@@ -9,7 +9,7 @@ public class User {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long id;  //TODO: decide on Long or UUID or some unique username
     private String username;
     private String name;
     private String email;
