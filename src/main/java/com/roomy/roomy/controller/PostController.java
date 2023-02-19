@@ -2,6 +2,7 @@ package com.roomy.roomy.controller;
 
 import com.roomy.roomy.exception.PostNotFoundException;
 import com.roomy.roomy.model.Post;
+import com.roomy.roomy.model.PostWithUserId;
 import com.roomy.roomy.model.User;
 import com.roomy.roomy.repository.PostRepository;
 import com.roomy.roomy.repository.UserRepository;
@@ -27,19 +28,20 @@ public class PostController {
     @PostMapping("/post")
     ResponseEntity newPost(@RequestBody Post newPost){
 
-        Long userId = newPost.getUserId();
+        Long userId = newPost.getUser().getId();
         if(userId == null)
         {
             Map<String, String> response = new HashMap<>();
             response.put("error", "UserID not provided");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-        User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
-            Map<String, String> response = new HashMap<>();
-            response.put("error", "User with ID " + userId + " not found");
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
+//        User user = userRepository.findById(userId).orElse(null);
+//        if (user == null) {
+//            Map<String, String> response = new HashMap<>();
+//            response.put("error", "User with ID " + userId + " not found");
+//            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+//        }
+//        newPost.setUser(user);
         Post savedPost = postRepository.save(newPost);
 
         // return the saved post as a response

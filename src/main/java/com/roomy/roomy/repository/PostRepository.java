@@ -1,6 +1,7 @@
 package com.roomy.roomy.repository;
 
 import com.roomy.roomy.model.Post;
+import com.roomy.roomy.model.PostWithUserId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
