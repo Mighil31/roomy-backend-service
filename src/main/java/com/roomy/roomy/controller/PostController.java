@@ -1,7 +1,9 @@
 package com.roomy.roomy.controller;
 
 import com.roomy.roomy.exception.PostNotFoundException;
+import com.roomy.roomy.exception.UserNotFoundException;
 import com.roomy.roomy.model.Post;
+import com.roomy.roomy.model.PostRequest;
 import com.roomy.roomy.model.User;
 import com.roomy.roomy.repository.PostRepository;
 import com.roomy.roomy.repository.UserRepository;
@@ -25,25 +27,17 @@ public class PostController {
     private UserRepository userRepository;
 
     @PostMapping("/post")
-    ResponseEntity newPost(@RequestBody Post newPost){
+    Post newPost(@RequestBody PostRequest postRequest){
 
-        Long userId = newPost.getUserId();
-        if(userId == null)
-        {
-            Map<String, String> response = new HashMap<>();
-            response.put("error", "UserID not provided");
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        if (postRequest.getUserId() == null) {
+            throw new UserNotFoundException(null);
         }
-        User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
-            Map<String, String> response = new HashMap<>();
-            response.put("error", "User with ID " + userId + " not found");
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
-        Post savedPost = postRepository.save(newPost);
-
-        // return the saved post as a response
-        return new ResponseEntity<>(savedPost, HttpStatus.CREATED);
+        User user = userRepository.findById(postRequest.getUserId()).orElseThrow(() -> new UserNotFoundException(postRequest.getUserId()));
+        Post post = new Post(postRequest);
+        post.setUser(user);
+        System.out.println("\n\n");
+        System.out.println(post);
+        return postRepository.save(post);
     }
 
     @GetMapping("/posts")
@@ -58,10 +52,8 @@ public class PostController {
     }
 
     @GetMapping("/{userId}/posts")
-    List<Post> getUserPost(@PathVariable Long userId){
-        return postRepository.findByUserId(userId); //add exception
+    List<Post> getUserPost(@PathVariable UUID userId){
+        return postRepository.findByUserUserId(userId);
     }
-
-    //TODO: Add editPost API
 
 }
