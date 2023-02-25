@@ -29,14 +29,16 @@ public class Post {
     private int rent;
     private int noOfRoommates;
     private int noOfFilledRoommates = 1;
+    private String size;
     public Post() {
 
     }
-    public Post(String address1, String address2, String city, String state, String country,String postBody, String pincode, String gender, int noOfRoommates) {
+    public Post(String address1, String address2, String city, String state, String country,String postBody, String pincode, String gender, int noOfRoommates, String size) {
         this.address = new Address(address1, address2, city, state, country, pincode);
         this.postBody = postBody;
         this.gender = gender;
         this.noOfRoommates = noOfRoommates;
+        this.size = size;
     }
 
     public Post(PostRequest postRequest)
@@ -49,6 +51,15 @@ public class Post {
         this.noOfFilledRoommates = postRequest.getNoOfFilledRoommates();
         this.gender = postRequest.getGender();
         this.rent = postRequest.getRent();
+        this.size = postRequest.getSize();
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public UUID getPostId() {

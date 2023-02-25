@@ -42,7 +42,7 @@ public class PostController {
 
     @GetMapping("/posts")
     List<Post> getAllPosts(){
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByDateDesc();
     }
 
     @GetMapping("/post/{id}")
@@ -53,7 +53,7 @@ public class PostController {
 
     @GetMapping("/{userId}/posts")
     List<Post> getUserPost(@PathVariable UUID userId){
-        return postRepository.findByUserUserId(userId);
+        return postRepository.findByUserUserIdOrderByDateDesc(userId);
     }
 
 }

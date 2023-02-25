@@ -10,5 +10,9 @@ import java.util.UUID;
 
 public interface PostRepository extends JpaRepository<Post, UUID> {
 //    @Query("SELECT * FROM post")
-    List<Post> findByUserUserId(UUID userId);
+
+    List<Post> findByUserUserIdOrderByDateAsc(UUID userId);
+    List<Post> findByUserUserIdOrderByDateDesc(UUID userId);
+
+    List<Post> findAllByOrderByDateDesc();
 }

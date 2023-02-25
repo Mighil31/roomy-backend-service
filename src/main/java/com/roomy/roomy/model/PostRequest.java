@@ -16,6 +16,15 @@ public class PostRequest {
     private int rent;
     private int noOfRoommates;
     private int noOfFilledRoommates;
+    private String size;
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
 
     public String getAddress1() {
         return address1;
