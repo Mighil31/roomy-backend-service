@@ -30,7 +30,7 @@ public class PostController {
     Post newPost(@RequestBody PostRequest postRequest){
 
         if (postRequest.getUserId() == null) {
-            throw new UserNotFoundException(null);
+            throw new UserNotFoundException("");
         }
         User user = userRepository.findById(postRequest.getUserId()).orElseThrow(() -> new UserNotFoundException(postRequest.getUserId()));
         Post post = new Post(postRequest);
