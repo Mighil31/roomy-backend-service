@@ -12,6 +12,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 //adding the following token to make it a managed bean
@@ -23,9 +24,16 @@ public class JwtService {
     public String extractUsername(String token){
         return extractClaim(token,Claims::getSubject);
     }
+
+
     public <T> T extractClaim(String token, Function<Claims,T> claimsResolver){
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
+    }
+
+    public UUID extractUUID(String token)
+    {
+        return UUID.fromString(extractClaim(token, claims -> (String) claims.get("userId")));
     }
 
     public String generateToken(UserDetails userDetails){
